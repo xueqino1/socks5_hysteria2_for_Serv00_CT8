@@ -12,12 +12,12 @@ jobs:
       - name: Set up SSHPass
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
-      - name: Get ACCOUNTS_JSON15
+      - name: Get ACCOUNTS_JSON
         id: get-accounts
         run: |
           echo "$ACCOUNTS_JSON" > accounts.json
         env:
-          ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
+          ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON15 }}
         # 从 GitHub Secrets 获取 ACCOUNTS_JSON 变量，并保存到文件 accounts.json
 
       - name: Generate SSH Commands
@@ -35,6 +35,4 @@ jobs:
           chmod +x sshpass.sh
           
       - name: Execute SSH Commands
-        run: 
-          ./sshpass.sh
-          echo "run done"
+        run: ./sshpass.sh
