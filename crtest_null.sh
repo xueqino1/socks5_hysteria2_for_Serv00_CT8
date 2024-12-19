@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "keeper"
+echo "$(whoami) - $(date '+%Y-%m-%d %H:%M:%S')  " >> a.txt
