@@ -24,4 +24,4 @@ jobs:
         node-version: '20' # 或者你想要的其他版本
     #- run: npm install
     - name: Run script with cfg.json
-      run: node index.js cfg.json
+      run: node getcmliuip.js cfg.json
