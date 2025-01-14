@@ -5,7 +5,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 if (process.argv.length < 3) {
-    console.error('Usage: node index.js cfg.json');
+    console.error('Usage: node xx.js cfg.json');
     process.exit(1);
   }
 const configFile = process.argv[2];
@@ -18,7 +18,7 @@ process.exit(1);
 let config={}
 try{
     config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-    console.log('Configuration loaded:', config);
+    console.log('Configuration loaded:', config.port);
 }
 catch(e){
     console.error('Configuration parse failed:', e);
