@@ -1,4 +1,4 @@
-//新建secret GETCMLIUIP_JSON  {"dhost":"a.com","dport":12345}
+//新建setting->security->secrets and variables->actions new repository secret ,GETCMLIUIP_JSON  {"dhost":"a.com","dport":12345}
 
 const https = require('https');
 const http = require('http');
@@ -15,12 +15,14 @@ if (!fs.existsSync(configPath)) {
 console.error(`Configuration file ${configFile} not found.`);
 process.exit(1);
 }
+let config={}
 try{
-    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     console.log('Configuration loaded:', config);
 }
 catch(e){
-    console.log('Configuration parse failed:', e);
+    console.error('Configuration parse failed:', e);
+    process.exit(1);
 }
 // 定义要请求的 URL
 const url="https://sub.cmliussss.workers.dev/sub?password=a&security=tls&alpn=h2%2Chttp%2F1.1%2Ch3&type=ws&host=a.com&path=%2F"
