@@ -1,0 +1,27 @@
+name: getcmliuip 
+
+on:
+  workflow_dispatch: # 手动触发工作流
+  schedule:
+    - cron: "30 21 * * *"  # +8后是北京时间
+
+jobs:
+  run-script:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Get CFG
+      run: |
+          echo "$CFG_JSON" > cfg.json
+      env:
+         CFG_JSON: ${{ secrets.GETCMLIUIP_JSON }}
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20' # 或者你想要的其他版本
+    #- run: npm install
+    - name: Run script with cfg.json
+      run: node index.js cfg.json
