@@ -1,4 +1,4 @@
-name: Execute SSH Commands
+name: serv00_getcmliuip
 
 on:
   workflow_dispatch: # 手动触发工作流
@@ -20,19 +20,23 @@ jobs:
           ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
         # 从 GitHub Secrets 获取 ACCOUNTS_JSON 变量，并保存到文件 accounts.json
 
-      - name: Generate SSH Commands
+      - name: write script 
+       
         id: generate-ssh-commands
         run: |
           echo "#!/bin/bash" > sshpass.sh
+           #支持多个服务器，ACCOUNTS_JSON里是一个数组，每个元素是一个对象。
           while IFS= read -r account; do
             username=$(echo "$account" | jq -r '.username')
             password=$(echo "$account" | jq -r '.password')
             ssh=$(echo "$account" | jq -r '.ssh')
 
             echo "echo \"Executing for $username@$ssh\"" >> sshpass.sh
-            echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/xueqino1/socks5_hysteria2_for_Serv00_CT8/refs/heads/main/crtest_null.sh)'" >> sshpass.sh
+            echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'node /usr/home/xxeeqq/getcmliuip.js'" >> sshpass.sh
           done < <(jq -c '.[]' accounts.json)
           chmod +x sshpass.sh
 
-      - name: Execute SSH Commands
+
+#bash <(curl -s https://raw.githubusercontent.com/xueqino1/socks5_hysteria2_for_Serv00_CT8/refs/heads/main/crtest_null.sh)
+      - name: Execute script
         run: ./sshpass.sh
